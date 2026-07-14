@@ -1,0 +1,35 @@
+/* the dark forest — F */
+TI.registerArea({
+    id: "forest",
+    name: "the dark forest",
+    shortName: "the forest",
+    letter: "F",
+    creature: "shadewisp",
+    boss: "stag",
+    itemId: "knife",
+    memId: "m_forest",
+    map: [
+        "##############",
+        "#......#....E#",
+        "#..2...+.....#",
+        "#.i....#..m..#",
+        "###D####.....#",
+        "#..B...#..1..#",
+        "#......#.....#",
+        "##############",
+    ],
+    enterText: "the trees close behind you like a door. the light in here comes from nowhere in particular and doesn't reach the ground. it is very, very quiet.",
+    lockedText: "the trees here grow in a wall, trunk against trunk. between two of them, an eye the size of your fist opens, considers you, and closes. not yet.",
+    unlockText: "the wall of trees groans and leans apart, an inch at a time. an invitation. or an appointment.",
+    itemLine: "driven into a stump, waiting: a hunting knife. the initials on the handle are yours.",
+    regions: [
+        { x0: 8, y0: 1, x1: 12, y1: 6, text: "a path of white stones, laid by hand. they mark the way in. nobody has ever needed them to mark the way out." },
+        { x0: 1, y0: 1, x1: 6, y1: 3, text: "a clearing where the grass grows in a perfect circle. the trees around it all lean away." },
+        { x0: 1, y0: 5, x1: 6, y1: 6, text: "the deep wood. between the trunks, pale shapes that are almost light. the silence here is the loud kind." },
+    ],
+    ambience: [
+        "something pale watches from between the trees. when you look, it is a birch. it was not a birch.",
+        "hoofsteps, keeping perfect pace with yours. they stop half a beat after you do.",
+        "antlers scrape the canopy somewhere overhead. no leaves fall.",
+    ],
+});

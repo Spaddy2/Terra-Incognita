@@ -1,0 +1,35 @@
+/* the castle — C */
+TI.registerArea({
+    id: "castle",
+    name: "the castle",
+    shortName: "the castle",
+    letter: "C",
+    creature: "hollowguard",
+    boss: "king",
+    itemId: "rsword",
+    memId: "m_castle",
+    map: [
+        "##############",
+        "#E....#..1...#",
+        "#.....#......#",
+        "#..i..+..m...#",
+        "####D##......#",
+        "#..B..#..2...#",
+        "#.....#......#",
+        "##############",
+    ],
+    enterText: "the gates stand open. they have stood open a long time. banners hang in strips, and the wind through the arrow-slits sounds like a house pretending to be asleep.",
+    lockedText: "the throne room doors are barred from your side — which means somebody wanted to keep the king in, not you out. the guards still walking these halls hold the bar in place.",
+    unlockText: "deep in the keep, a bar clatters to the floor. the throne room is open. something in there laughs, delighted.",
+    itemLine: "across an armoury rack, one sword left of dozens: rusted, but the balance is still true.",
+    regions: [
+        { x0: 1, y0: 1, x1: 5, y1: 3, text: "the gatehouse. helmets are stacked in a corner, polished, arranged by size. someone has been tidying for a very long time." },
+        { x0: 7, y0: 1, x1: 12, y1: 6, text: "the great hall. a banquet table runs its length, set for one. the food is fresh. the chair is pulled out." },
+        { x0: 1, y0: 5, x1: 5, y1: 6, text: "the throne room. every wall is covered in names, scratched into the stone at throne height. they are all different. they are all yours." },
+    ],
+    ambience: [
+        "armour clanks down a corridor you can't see.",
+        "from somewhere above: a man's voice, conversational, answering nobody.",
+        "a strip of banner detaches and falls, unhurried.",
+    ],
+});

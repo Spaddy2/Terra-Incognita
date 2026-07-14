@@ -1,0 +1,35 @@
+/* the cave — V */
+TI.registerArea({
+    id: "cave",
+    name: "the cave",
+    shortName: "the cave",
+    letter: "V",
+    creature: "hollowecho",
+    boss: "echo",
+    itemId: "glowcap",
+    memId: "m_cave",
+    map: [
+        "##############",
+        "#.....#......#",
+        "#..B..#..2...#",
+        "####D##......#",
+        "#..i..+..m...#",
+        "#.....#......#",
+        "#E....#..1...#",
+        "##############",
+    ],
+    enterText: "the cave mouth exhales cold air in a slow rhythm, like breathing. your footsteps go in ahead of you and come back wrong.",
+    lockedText: "the passage down is closed by a slab of stone that fits too well to be natural. on its face, one word, chiselled in your handwriting: LAST.",
+    unlockText: "the slab marked LAST swings inward on a balance point, silent, counterweighted. built by an engineer. you feel the workmanship in your own hands.",
+    itemLine: "a colony of glowcaps, pale and patient in the dark. you pick a cluster. the light comes with it.",
+    regions: [
+        { x0: 1, y0: 4, x1: 5, y1: 6, text: "the entry gallery. old torch brackets line the wall, all of them empty, all of them at exactly your reach." },
+        { x0: 7, y0: 1, x1: 12, y1: 6, text: "the echo hall. drop a stone here and it lands twice. speak, and wait, and eventually your own voice answers — from below, and slightly ahead of you." },
+        { x0: 1, y0: 1, x1: 5, y1: 2, text: "the bottom of the cave. perfectly round, perfectly smooth, like a bubble in the rock. in the centre, the dark is standing up." },
+    ],
+    ambience: [
+        "your footsteps echo twice. you stop. the second set takes one more step.",
+        "water drips somewhere, keeping time. it has never once missed.",
+        "the dark ahead of you shifts its weight from foot to foot.",
+    ],
+});

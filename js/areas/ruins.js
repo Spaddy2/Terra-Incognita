@@ -1,0 +1,36 @@
+/* the ruins — R */
+TI.registerArea({
+    id: "ruins",
+    name: "the ruins",
+    shortName: "the ruins",
+    letter: "R",
+    creature: "stonewarden",
+    boss: "archivist",
+    itemId: "shield",
+    memId: "m_ruins",
+    map: [
+        "##############",
+        "#.....#......#",
+        "#..1..#...B..#",
+        "#.....####D###",
+        "#..m..#....i.#",
+        "#.....+...2..#",
+        "#E....#......#",
+        "##############",
+    ],
+    enterText: "a city older than the count of years, folded down into the grass. the streets are still streets. something here still keeps office hours.",
+    lockedText: "the archive doors are shut, and the stone says, in forty languages, RECORDS IN USE. the wardens are still filing. the wardens must finish filing.",
+    unlockText: "the stone doors of the archive grind apart, and a voice from inside calls, pleasantly: \"come in, come in. you're expected.\"",
+    itemLine: "a fallen warden's arm still grips it: a stone-faced shield. it is heavier than a wall and it wants to be held.",
+    regions: [
+        { x0: 1, y0: 4, x1: 5, y1: 6, text: "the processional way. every doorway you pass has a name carved above it. you stop reading them after the third one." },
+        { x0: 1, y0: 1, x1: 5, y1: 3, text: "a plaza of toppled statues. every face has been carefully, lovingly chiselled off. except they all still look like somebody." },
+        { x0: 7, y0: 4, x1: 12, y1: 6, text: "the outer archive. shelves of stone tablets, indexed and cross-referenced. the subject of every single one is you." },
+        { x0: 7, y0: 1, x1: 12, y1: 2, text: "the inner archive. lamplight. a desk. a chair for visitors, its cushion worn down by one particular shape of sitting." },
+    ],
+    ambience: [
+        "stone grinds on stone, several streets over. filing.",
+        "a tablet lies in your path, freshly placed. you step over it without reading it. it wanted you to read it.",
+        "wind moves through the ruins in alphabetical order.",
+    ],
+});

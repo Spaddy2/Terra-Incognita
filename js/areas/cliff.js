@@ -1,0 +1,35 @@
+/* the sea cliff — K */
+TI.registerArea({
+    id: "cliff",
+    name: "the sea cliff",
+    shortName: "the cliff",
+    letter: "K",
+    creature: "tidewraith",
+    boss: "tidecaller",
+    itemId: "whet",
+    memId: "m_cliff",
+    map: [
+        "##############",
+        "#...1..#....E#",
+        "#......#.....#",
+        "#...m..+..i..#",
+        "#......##D####",
+        "#...2..#..B..#",
+        "#......#.....#",
+        "##############",
+    ],
+    enterText: "the land ends in a long grey blade of rock. far below, the sea works at the stone the way it has worked for ten thousand years, and means to keep working.",
+    lockedText: "the way down to the tide-cave is under water. the sea is holding its breath on purpose. its servants still walk the headland.",
+    unlockText: "below you, with a sound like a held breath released, the sea pulls back from the tide-cave mouth.",
+    itemLine: "set on a flat rock at the cliff edge, deliberately, squared to the horizon: a whetstone, worn in a groove that matches your grip.",
+    regions: [
+        { x0: 8, y0: 1, x1: 12, y1: 3, text: "the headland. wind, salt, gulls that don't call. a rope is tied off to an iron ring here, old but retied recently. by someone thorough." },
+        { x0: 1, y0: 1, x1: 6, y1: 6, text: "the long stair, cut into the cliff face by hand. hundreds of steps. the chisel-work is patient and obsessive and familiar." },
+        { x0: 8, y0: 5, x1: 12, y1: 6, text: "the tide-cave. the walls weep. things that were given to the sea are arranged here in tidy rows, waiting to be claimed." },
+    ],
+    ambience: [
+        "spray hangs in the air a half-second too long before it falls.",
+        "the sea sounds, briefly, like a room full of people asking one question.",
+        "far out, something long and slow rolls under the surface without breaking it.",
+    ],
+});

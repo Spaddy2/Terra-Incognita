@@ -1,0 +1,35 @@
+/* the swamp — S */
+TI.registerArea({
+    id: "swamp",
+    name: "the swamp",
+    shortName: "the swamp",
+    letter: "S",
+    creature: "boglurker",
+    boss: "frog",
+    itemId: "shard",
+    memId: "m_swamp",
+    map: [
+        "##############",
+        "#E....#......#",
+        "#.....+...2..#",
+        "#..m..#....i.#",
+        "#.....####D###",
+        "#..1..#...B..#",
+        "#.....#......#",
+        "##############",
+    ],
+    enterText: "the ground goes soft under your boots. the air is thick enough to chew. somewhere ahead, something enormous breathes in the water.",
+    lockedText: "a wall of woven reeds and mud, packed deliberate and tight. whatever built it is still busy. the swamp is not done testing you.",
+    unlockText: "somewhere deeper in, mud slides off mud. a way through has opened.",
+    itemLine: "wedged in a rotted stump: an iron shard, sharp on three sides. torn off something much bigger.",
+    regions: [
+        { x0: 1, y0: 1, x1: 5, y1: 6, text: "dead reeds. standing water. old bootprints, the same tread as yours, going in every direction and coming back from none of them." },
+        { x0: 7, y0: 1, x1: 12, y1: 3, text: "a drowned grove. the trees died standing up and never fell. bubbles rise in slow ones and twos." },
+        { x0: 7, y0: 5, x1: 12, y1: 6, text: "the heart of the swamp. the water here is perfectly still and perfectly black, and something under it is looking up." },
+    ],
+    ambience: [
+        "a croak rolls across the water. too low. too patient.",
+        "something moves in the reeds and decides against it.",
+        "the smell of rot and, underneath it, faintly, machine oil.",
+    ],
+});
