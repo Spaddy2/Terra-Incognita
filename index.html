@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terra Incognita</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-root">
+    <canvas id="game"></canvas>
+
+    <!-- Top HUD -->
+    <div id="hud">
+        <div class="hud-group" title="Supplies — food, water and gear. Every step consumes some. Resupply at villages.">
+            <span class="hud-icon">🎒</span>
+            <div id="supply-bar"><div id="supply-fill"></div></div>
+            <span id="supply-num">100</span>
+        </div>
+        <div class="hud-group" title="Gold recovered from ruins and treasures">
+            <span class="hud-icon">🪙</span><span id="gold-num">0</span>
+        </div>
+        <div class="hud-group" title="Map fragments — find all 3 to reveal the Lost City">
+            <span class="hud-icon">🗺️</span><span id="frag-num">0 / 3</span>
+        </div>
+        <div class="hud-group" title="Percentage of the landmass you have charted">
+            <span class="hud-icon">🧭</span><span id="chart-num">0%</span>
+        </div>
+        <div class="hud-group" title="Expedition day and time of day">
+            <span id="time-icon" class="hud-icon">☀️</span><span id="day-num">Day 1</span>
+        </div>
+        <div class="hud-group" id="weather-group" title="Weather">
+            <span id="weather-icon" class="hud-icon">🌤️</span>
+        </div>
+        <div class="hud-spacer"></div>
+        <button class="hud-btn" id="btn-camp" title="Camp until morning (C) — costs 4 supplies">⛺ Camp</button>
+        <button class="hud-btn" id="btn-map" title="Toggle expedition map (M)">🗺️ Map</button>
+        <button class="hud-btn" id="btn-sound" title="Toggle sound">🔊</button>
+        <button class="hud-btn" id="btn-help" title="Help (H)">?</button>
+        <button class="hud-btn" id="btn-menu" title="Abandon expedition / new world">☰</button>
+    </div>
+
+    <!-- Message log -->
+    <div id="log"></div>
+
+    <!-- Minimap -->
+    <div id="minimap-wrap">
+        <canvas id="minimap" width="160" height="160"></canvas>
+        <div id="minimap-label">Charted territory</div>
+    </div>
+
+    <!-- Compass to Lost City (appears after 3 fragments) -->
+    <div id="compass" class="hidden" title="The map fragments point the way…">
+        <div id="compass-needle">➤</div>
+    </div>
+
+    <!-- Full map overlay -->
+    <div id="bigmap-overlay" class="overlay hidden">
+        <div class="overlay-card wide">
+            <h2>Expedition Map</h2>
+            <canvas id="bigmap" width="660" height="660"></canvas>
+            <div class="legend">
+                <span>⛺ Village</span><span>🗿 Ruins</span><span>🏛️ Temple</span>
+                <span>⚓ Shipwreck</span><span>🗼 Obelisk</span><span>👑 Lost City</span>
+            </div>
+            <button class="btn" data-close="bigmap-overlay">Close (M)</button>
+        </div>
+    </div>
+
+    <!-- Help overlay -->
+    <div id="help-overlay" class="overlay hidden">
+        <div class="overlay-card">
+            <h2>Explorer's Handbook</h2>
+            <div class="help-cols">
+                <div>
+                    <h3>Goal</h3>
+                    <p>Chart the unknown continent. Recover <b>3 map fragments</b> from ruins and
+                    temples to reveal the <b>Lost City</b> — then reach it before your supplies run out.</p>
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><b>WASD / Arrows</b> — travel</li>
+                        <li><b>Click</b> — auto-travel to a charted tile</li>
+                        <li><b>C</b> — camp until morning</li>
+                        <li><b>M</b> — expedition map &nbsp; <b>H</b> — help</li>
+                        <li><b>Mouse wheel</b> — zoom</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Terrain</h3>
+                    <ul>
+                        <li>Grasslands &amp; beaches — easy going</li>
+                        <li>Forests, deserts, hills — slower, costlier</li>
+                        <li>Swamps &amp; peaks — grueling</li>
+                        <li>Water — impassable</li>
+                    </ul>
+                    <h3>Survival</h3>
+                    <ul>
+                        <li>Every step burns supplies; harsh terrain burns more</li>
+                        <li>Forage as you travel — forests are generous</li>
+                        <li><b>Villages ⛺</b> fully resupply your expedition</li>
+                        <li>Night narrows your vision; rain slows you down</li>
+                        <li><b>Obelisks 🗼</b> chart the land around them</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn" data-close="help-overlay">Onward! (H)</button>
+        </div>
+    </div>
+
+    <!-- Title screen -->
+    <div id="title-overlay" class="overlay">
+        <div class="overlay-card title-card">
+            <h1 class="game-title">TERRA INCOGNITA</h1>
+            <p class="tagline">« Here be dragons »</p>
+            <p class="story">The year is 1721. Your ship has landed on the shore of an uncharted
+            continent. Somewhere beyond the fog lies a <b>Lost City</b> of legend — and only three
+            scattered map fragments can reveal it. Chart the land, survive its wilds, and write
+            your name into history.</p>
+            <div class="seed-row">
+                <label for="seed-input">World seed</label>
+                <input id="seed-input" type="text" maxlength="24" spellcheck="false">
+                <button class="btn small" id="btn-reroll" title="Random seed">🎲</button>
+            </div>
+            <div class="title-buttons">
+                <button class="btn primary" id="btn-new">⚔️ New Expedition</button>
+                <button class="btn" id="btn-continue" disabled>📜 Continue</button>
+            </div>
+            <p class="hint">Same seed → same world. Share seeds with friends.</p>
+        </div>
+    </div>
+
+    <!-- End screens -->
+    <div id="end-overlay" class="overlay hidden">
+        <div class="overlay-card">
+            <h1 id="end-title">Expedition Over</h1>
+            <p id="end-text"></p>
+            <div id="end-stats" class="stats-grid"></div>
+            <div class="title-buttons">
+                <button class="btn primary" id="btn-again">⚔️ New Expedition</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
