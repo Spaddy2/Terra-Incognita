@@ -111,6 +111,7 @@ TI.CREATURES = {
     /* ---- bosses ---- */
     frog: {
         name: "the giant purple frog", hp: 22, dmg: [4, 8], behavior: "slow", evade: 0, boss: true,
+        phase2: { line: "the frog stops playing. it has remembered how this goes.", behavior: "aggressive" },
         intro: "it is ancient. it is wrong. it has been here far, far too long.\nit looks at you like it recognises you.",
         death: "the frog dies slowly, without surprise. like it has done this before. like you have.",
         midLines: [
@@ -130,6 +131,7 @@ TI.CREATURES = {
     },
     king: {
         name: "the crazed king", hp: 24, dmg: [3, 7], behavior: "erratic", evade: 0, boss: true,
+        phase2: { line: "\"ALL OF YOU,\" the king says, and stops laughing. entirely.", dmgBonus: 1 },
         intro: "he was sane once. you can see the ruin of it.\nhe rises from the throne and smiles like an old friend.",
         death: "the king kneels, finally quiet. \"there you are,\" he says, to none of your names, and is gone.",
         midLines: [
@@ -151,6 +153,7 @@ TI.CREATURES = {
     },
     stag: {
         name: "the hollow stag", hp: 26, dmg: [4, 7], behavior: "fast", evade: 0.2, boss: true,
+        phase2: { line: "the stag's outline frays at the edges. it is done being beautiful.", behavior: "erratic", dmgBonus: 1 },
         intro: "it steps out from between two trees that are too close together.\nbeautiful. wrong. it has been following you for some time now, and it knows you know.",
         death: "the stag folds like paper. the forest exhales. the light between the trees goes ordinary.",
         midLines: [
@@ -170,6 +173,7 @@ TI.CREATURES = {
     },
     tidecaller: {
         name: "the tide caller", hp: 26, dmg: [4, 7], behavior: "defensive", evade: 0, boss: true,
+        phase2: { line: "the sea rises behind it like a held breath.", dmgBonus: 1 },
         intro: "something that used to be human stands where the water meets the rock.\nit reaches for you. it looks like it is asking for help.",
         death: "it sinks without struggling. at the last moment, it waves. or the water moves. one of those.",
         midLines: [
@@ -189,6 +193,7 @@ TI.CREATURES = {
     },
     archivist: {
         name: "the archivist", hp: 28, dmg: [3, 6], behavior: "defensive", evade: 0.15, boss: true,
+        phase2: { line: "\"new data,\" it says, delighted, and closes the ledger.", behavior: "aggressive" },
         intro: "it sits among the records, and the records are all about you.\n\"back again,\" it says, warmly. \"sit. no? straight to it, then. like the others.\"",
         death: "\"forty-two,\" it says as it crumbles, and it sounds — proud? \"do read the files. you've earned that much.\"",
         midLines: [
@@ -210,6 +215,7 @@ TI.CREATURES = {
     },
     echo: {
         name: "the echo", hp: 30, dmg: [4, 7], behavior: "mirror", evade: 0.2, boss: true,
+        phase2: { line: "it stops mirroring you. it starts anticipating you.", behavior: "aggressive", dmgBonus: 1 },
         intro: "at the bottom of the cave something is waiting, and it is shaped exactly like you.\nit does not speak. it raises its weapon when you raise yours.",
         death: "it falls the way you would fall. it lies the way you would lie.\nyou leave without looking back. you don't think about why.",
         midLines: [
@@ -231,6 +237,7 @@ TI.CREATURES = {
     /* ---- the final boss ---- */
     you: {
         name: "you", hp: 34, dmg: [4, 8], behavior: "aggressive", evade: 0.15, boss: true, final: true,
+        phase2: { line: "they grit their teeth — your tell. the one you didn't know you had.", dmgBonus: 1 },
         intro: "",
         death: "",
         midLines: [

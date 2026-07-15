@@ -60,9 +60,12 @@ TI.cabin = {
     ],
 
     enter() {
+        TI.menuClose();
         TI.view = null;
         TI.mode = "busy";
         TI.setLocation("the cabin");
+        TI.setMapTheme("");
+        TI.music.setScene("cabin");
         TI.setMap(this.ART.map(l => `<span class="t-art">${TI.esc(l)}</span>`).join("\n"));
 
         const s = TI.state;
@@ -95,6 +98,8 @@ TI.cabin = {
         const chestLabel = s.chestOpened ? "the chest, open and empty"
             : (s.installed.length >= 3 ? "the chest — the lock has sprung" : "the locked chest");
         TI.setLocation("the cabin");
+        TI.setMapTheme("");
+        TI.music.setScene("cabin");
         TI.setMap(this.ART.map(l => `<span class="t-art">${TI.esc(l)}</span>`).join("\n"));
         TI.menuOpen([
             { label: "rest on the cot", fn: () => this.rest() },
@@ -210,6 +215,7 @@ TI.cabin = {
         s.machineOn = true;
         TI.save();
         TI.mode = "busy";
+        TI.music.setScene("final");
         TI.sound.play("machine");
         TI.playLines([
             { text: "the last piece settles. for one long second, nothing.", cls: "em" },

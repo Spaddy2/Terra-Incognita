@@ -22,13 +22,26 @@ TI.overworld = {
     },
 
     show() {
+        TI.menuClose();
         TI.view = this;
         TI.mode = "free";
         TI.setLocation("terra incognita");
+        TI.setMapTheme("");
+        TI.music.setScene("overworld");
         this.discover();
         this.render();
         TI.updateSidebar();
+        // slow water shimmer
+        if (!this._anim) {
+            this._anim = setInterval(() => {
+                if (TI.view === this && (TI.mode === "free" || TI.mode === "menu")) {
+                    this._wave = !this._wave;
+                    this.render();
+                }
+            }, 900);
+        }
     },
+    _wave: false,
 
     discover() {
         const s = TI.state.ow;
@@ -60,7 +73,10 @@ TI.overworld = {
                         if (as && as.boss) cls = "t-cabin";
                     }
                     else if (ch === "~") cls = "t-cabin";
-                    else if (ch === "≈") cls = "t-water";
+                    else if (ch === "≈") { cls = "t-water"; if (this._wave) ch = "~"; }
+                    else if (ch === "t") cls = "t-tree";
+                    else if (ch === "^") cls = "t-hill";
+                    else if (ch === ",") cls = "t-reed";
                     else cls = "t-land";
                 }
                 out += `<span class="${cls}">${TI.esc(ch)}</span>`;

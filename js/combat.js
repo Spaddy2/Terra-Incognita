@@ -24,6 +24,7 @@ TI.combat = {
         };
         TI.mode = "busy";
         TI.setLocation(this.active.opts.areaName || "");
+        TI.music.setScene(def.final ? "final" : "combat");
         this.renderStage();
         TI.sound.play(def.boss ? "boss" : "hit");
         const introLines = def.intro ? def.intro.split("\n").map(t => ({ text: t, cls: "em" })) : [];
@@ -94,20 +95,40 @@ TI.combat = {
             return this.enemyTurn();
         }
 
-        let dmg = TI.roll(n, s, m) + c.opening;
+        const extra = n > 1 ? TI.roll(n - 1, s, 0) : 0;
+        const die = TI.rint(1, s);                 // a max roll on the die is a perfect strike
+        const crit = die === s;
+        let dmg = extra + die + m + c.opening;
         c.opening = 0;
+        if (crit) dmg = Math.round(dmg * 1.5);
         if (c.enemyBlocking) {
             dmg = Math.max(1, Math.floor(dmg / 2));
             c.enemyBlocking = false;
             TI.log("it blocks. your " + w.name + " glances off — " + dmg + " damage.", "dmg");
+        } else if (crit) {
+            TI.log("a perfect strike — the " + w.name + " lands exactly where you meant it. " + dmg + " damage.", "em");
         } else {
             TI.log("you strike with the " + w.name + " — " + dmg + " damage.", "em");
         }
         TI.sound.play("hit");
+        TI.flashMap();
         c.hp -= dmg;
         this.renderStage();
         if (c.hp <= 0) return this.win();
+        this.checkPhase();
         this.enemyTurn();
+    },
+
+    /* wounded bosses change */
+    checkPhase() {
+        const c = this.active;
+        if (!c || !c.def.phase2 || c.phaseTwo) return;
+        if (c.hp > c.def.hp / 2) return;
+        c.phaseTwo = true;
+        c.behaviorOverride = c.def.phase2.behavior || null;
+        c.dmgBonus = c.def.phase2.dmgBonus || 0;
+        c.windup = false;
+        TI.log(c.def.phase2.line, "say");
     },
 
     doDodge() {
@@ -212,7 +233,7 @@ TI.combat = {
         if (!c) return;
         setTimeout(() => {
             if (!this.active) return;
-            const b = c.def.behavior;
+            const b = c.behaviorOverride || c.def.behavior;
 
             if (b === "slow") {
                 if (!c.windup) {
@@ -290,7 +311,7 @@ TI.combat = {
         c.playerDodging = false;
         const [lo, hi] = c.def.dmg;
         const dr = TI.ITEMS[TI.state.armor].dr || 0;
-        let dmg = Math.max(1, Math.round(TI.rint(lo, hi) * mult) - dr);
+        let dmg = Math.max(1, Math.round(TI.rint(lo, hi) * mult) + (c.dmgBonus || 0) - dr);
         TI.state.hp -= dmg;
         TI.sound.play("hurt");
         TI.flash(true);

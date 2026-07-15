@@ -66,6 +66,7 @@ TI._typeQueue = [];
 TI._typing = false;
 
 TI.log = function (text, cls) {
+    if (TI.settings && TI.settings.textMs === 0) { TI.logInstant(text, cls); return; }
     TI._typeQueue.push({ text, cls });
     if (!TI._typing) TI._typeNext();
 };
@@ -97,7 +98,7 @@ TI._typeNext = function () {
         if (!p.isConnected) { TI._typeNext(); return; }
         p.textContent = item.text.slice(0, ++i);
         logEl().scrollTop = logEl().scrollHeight;
-        if (i < item.text.length) TI._typeTimer = setTimeout(step, 11);
+        if (i < item.text.length) TI._typeTimer = setTimeout(step, TI.settings.textMs || 11);
         else { TI._curType = null; TI._typeTimer = setTimeout(() => TI._typeNext(), 30); }
     };
     step();
@@ -255,6 +256,76 @@ TI.sound = {
     },
 };
 
+/* ============================ music ============================ */
+/* slow generative ambience: a low drone plus sparse notes from a scene scale */
+TI.music = {
+    on: true, scene: null, _timer: null, _nextAt: 0, _droneAt: 0,
+    SCALES: {
+        dark:   [0, 3, 5, 7, 10],
+        dorian: [0, 2, 3, 7, 9],
+        phryg:  [0, 1, 5, 7, 8],
+        sparse: [0, 7, 12],
+        warm:   [0, 4, 7, 9, 14],
+        tense:  [0, 1, 6, 7],
+    },
+    SCENES: {
+        title:     { root: 110.00, scale: "dark",   pace: 3400 },
+        overworld: { root: 146.83, scale: "dorian", pace: 2600 },
+        cabin:     { root: 130.81, scale: "warm",   pace: 3000 },
+        swamp:     { root: 98.00,  scale: "dark",   pace: 3000 },
+        castle:    { root: 110.00, scale: "dorian", pace: 2600 },
+        forest:    { root: 123.47, scale: "dark",   pace: 3200 },
+        cliff:     { root: 92.50,  scale: "dorian", pace: 2800 },
+        ruins:     { root: 82.41,  scale: "phryg",  pace: 3000 },
+        cave:      { root: 65.41,  scale: "sparse", pace: 3800 },
+        combat:    { root: 87.31,  scale: "tense",  pace: 1100, pulse: true },
+        final:     { root: 73.42,  scale: "tense",  pace: 900,  pulse: true },
+    },
+    setScene(name) {
+        if (this.scene !== name) { this.scene = this.SCENES[name] ? name : null; this._nextAt = 0; }
+    },
+    start() {
+        if (this._timer) return;
+        this._timer = setInterval(() => this._tick(), 300);
+    },
+    _tick() {
+        if (!this.on || !TI.sound.on || !TI.sound.ctx || !this.scene) return;
+        if (TI.sound.ctx.state !== "running") return;
+        const sc = this.SCENES[this.scene];
+        const now = Date.now();
+        if (now >= this._droneAt) {
+            this._droneAt = now + 6000;
+            TI.sound.tone(sc.root / 2, 5.5, "sine", 0.022);
+            TI.sound.tone((sc.root / 2) * 1.5, 5.5, "sine", 0.011, 0.4);
+        }
+        if (now >= this._nextAt) {
+            this._nextAt = now + sc.pace * (0.7 + Math.random() * 0.8);
+            const scale = this.SCALES[sc.scale];
+            const deg = scale[TI.rint(0, scale.length - 1)];
+            const oct = TI.chance(0.3) ? 2 : 1;
+            TI.sound.tone(sc.root * Math.pow(2, deg / 12) * oct, 1.6, "triangle", 0.02);
+            if (sc.pulse) TI.sound.tone(sc.root / 2, 0.12, "square", 0.03);
+        }
+    },
+    toggle() { this.on = !this.on; return this.on; },
+};
+
+/* ============================ settings ============================ */
+TI.settings = { textMs: 11, music: true, sfx: true };
+TI.loadSettings = function () {
+    try { Object.assign(TI.settings, JSON.parse(localStorage.getItem("ti-settings-v1") || "{}")); } catch (e) {}
+    TI.music.on = TI.settings.music;
+    TI.sound.on = TI.settings.sfx;
+};
+TI.saveSettings = function () {
+    TI.settings.music = TI.music.on;
+    TI.settings.sfx = TI.sound.on;
+    try { localStorage.setItem("ti-settings-v1", JSON.stringify(TI.settings)); } catch (e) {}
+};
+TI.textSpeedLabel = function () {
+    return TI.settings.textMs === 0 ? "instant" : (TI.settings.textMs <= 5 ? "fast" : "normal");
+};
+
 /* ============================ fx ============================ */
 TI.fade = function (kind, cb, slow) {
     const f = document.getElementById("fade");
@@ -314,6 +385,13 @@ TI.updateSidebar = function () {
 
 /* ============================ map + location helpers ============================ */
 TI.setMap = function (html) { document.getElementById("map").innerHTML = html; };
+TI.setMapTheme = function (cls) { document.getElementById("map").className = cls || ""; };
+TI.flashMap = function () {
+    const m = document.getElementById("map");
+    m.classList.remove("foehit");
+    void m.offsetWidth;
+    m.classList.add("foehit");
+};
 TI.setLocation = function (name) { document.getElementById("location-name").textContent = name; };
 TI.esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -326,6 +404,7 @@ document.addEventListener("keydown", (e) => {
     if (["arrowup", "arrowdown", "arrowleft", "arrowright", " "].includes(e.key.toLowerCase()) || [" "].includes(e.key)) e.preventDefault();
 
     TI.sound.ensure();
+    TI.music.start();
 
     // a running line-sequence: any key fast-forwards it
     if (TI._seqSkip) { TI._seqSkip(); return; }
@@ -338,6 +417,19 @@ document.addEventListener("keydown", (e) => {
         if (k === "s") {
             const on = TI.sound.toggle();
             document.getElementById("title-sound").textContent = on ? "on" : "off";
+            TI.saveSettings();
+            return;
+        }
+        if (k === "m") {
+            const on = TI.music.toggle();
+            document.getElementById("title-music").textContent = on ? "on" : "off";
+            TI.saveSettings();
+            return;
+        }
+        if (k === "t") {
+            TI.settings.textMs = TI.settings.textMs === 11 ? 4 : (TI.settings.textMs === 4 ? 0 : 11);
+            document.getElementById("title-text").textContent = TI.textSpeedLabel();
+            TI.saveSettings();
             return;
         }
         // fall through to menu nav below
@@ -378,7 +470,11 @@ TI.showScreen = function (id) {
 /* ============================ title / boot ============================ */
 TI.showTitle = function () {
     TI.mode = "title";
+    TI.music.setScene("title");
     TI.showScreen("title");
+    document.getElementById("title-sound").textContent = TI.sound.on ? "on" : "off";
+    document.getElementById("title-music").textContent = TI.music.on ? "on" : "off";
+    document.getElementById("title-text").textContent = TI.textSpeedLabel();
     const el = document.getElementById("title-menu");
     el.innerHTML = "";
     const items = [{ label: "wake up", fn: () => TI.startNew() }];
@@ -388,7 +484,7 @@ TI.showTitle = function () {
         const b = document.createElement("button");
         b.className = "menu-btn";
         b.textContent = "[ " + it.label + " ]";
-        b.addEventListener("click", () => { TI.sound.ensure(); TI._menu = null; it.fn(); });
+        b.addEventListener("click", () => { TI.sound.ensure(); TI.music.start(); TI._menu = null; it.fn(); });
         el.appendChild(b);
     });
     // keyboard for title: build a lightweight menu record
@@ -441,6 +537,7 @@ TI.showEndTitle = function () {
     TI.mode = "busy";
     setTimeout(() => {
         TI.showScreen("title");
+        TI.music.setScene("title");
         document.getElementById("title-sub").textContent = "terra incognita";
         const el = document.getElementById("title-menu");
         el.innerHTML = `<p class="dim" style="text-align:center;line-height:2">memories recovered: ${s.frags.length} / ${TI.MEMORY_ORDER.length}
@@ -459,5 +556,14 @@ TI.showEndTitle = function () {
 
 /* ============================ go ============================ */
 document.addEventListener("DOMContentLoaded", () => {
+    TI.loadSettings();
     TI.showTitle();
+
+    // touch controls re-dispatch as key presses
+    document.querySelectorAll("#touch .tp").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            document.dispatchEvent(new KeyboardEvent("keydown", { key: btn.dataset.key }));
+        });
+    });
 });

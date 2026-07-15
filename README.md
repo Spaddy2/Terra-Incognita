@@ -21,7 +21,9 @@ Open `index.html` in any modern browser (or host the folder on GitHub Pages).
 | 1–9 | quick-select menu options |
 | I | open your pack |
 | Esc | back / leave |
-| S (title screen) | toggle sound |
+| S / M / T (title screen) | toggle sound / music / text speed |
+
+On touch devices an on-screen d-pad appears automatically.
 
 - Explore the overworld to find the six areas. The fog only lifts where you walk.
 - Each area holds two lesser creatures, a boss, a hidden item, and something worth remembering.
@@ -29,7 +31,13 @@ Open `index.html` in any modern browser (or host the folder on GitHub Pages).
 - Rest at the cot, craft at the workbench, and read the journals — they contain practical
   hints, and other things.
 - Turn-based combat: `[ attack ] [ dodge ] [ use item ] [ flee ]`. Watch enemy patterns;
-  dodging a telegraphed blow opens them up. Fleeing never works on bosses.
+  dodging a telegraphed blow opens them up. Fleeing never works on bosses — and wounded
+  bosses change their behaviour, so don't get comfortable.
+- A max roll on your weapon die is a perfect strike. Every boss you fell leaves you a
+  little more than you were.
+- The cave is genuinely dark. A torch in your pack pushes the dark back.
+- Generative ambient music shifts with every area, and turns tense when something
+  raises its weapon.
 - If you die, you wake on the cot at half health. This will feel familiar. That's the point.
 - The game autosaves. Close the tab and continue later.
 

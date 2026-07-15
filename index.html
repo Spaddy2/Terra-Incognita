@@ -23,14 +23,16 @@
         <p id="title-sub">you wake up in a field.</p>
         <div id="title-menu"></div>
         <p id="title-foot">wasd / arrows — move · enter — select · i — pack · esc — back<br>
-        <span class="dim">sound: <span id="title-sound">on</span> (press s to toggle)</span></p>
+        <span class="dim">sound: <span id="title-sound">on</span> (s) &nbsp;·&nbsp;
+        music: <span id="title-music">on</span> (m) &nbsp;·&nbsp;
+        text: <span id="title-text">normal</span> (t)</span></p>
     </div>
 
     <!-- ============ game screen ============ -->
     <div id="screen-game" class="hidden">
         <div id="main-col">
             <div id="location-name"></div>
-            <pre id="map"></pre>
+            <div id="map-stage"><pre id="map"></pre></div>
             <div id="log"></div>
             <div id="menu"></div>
         </div>
@@ -55,6 +57,21 @@
                 <div class="side-title">memories</div>
                 <div id="side-frags" class="dim"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- ============ touch controls (coarse pointers only) ============ -->
+    <div id="touch">
+        <div id="touch-pad">
+            <button data-key="ArrowUp"    class="tp tp-up">▲</button>
+            <button data-key="ArrowLeft"  class="tp tp-left">◀</button>
+            <button data-key="ArrowRight" class="tp tp-right">▶</button>
+            <button data-key="ArrowDown"  class="tp tp-down">▼</button>
+        </div>
+        <div id="touch-actions">
+            <button data-key="Enter"  class="tp">↵</button>
+            <button data-key="i"      class="tp">pack</button>
+            <button data-key="Escape" class="tp">esc</button>
         </div>
     </div>
 
