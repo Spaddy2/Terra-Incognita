@@ -3,13 +3,13 @@ window.TI = window.TI || {};
 
 TI.overworld = {
     W: 13, H: 7,
-    /* S swamp · C castle · F forest · K sea cliff · R ruins · V cave · ~ cabin
+    /* S swamp · C castle · F forest · K sea cliff · R ruins · V cave · H the cabin
        t trees · ^ hills · , reeds · ≈ water · . field */
     MAP: [
         "SS,.....tt.CC",
         "SS,.t....t.CC",
         ",tt...^..VV^≈",
-        "tFF...~..VV.≈",
+        "tFF...H..VV.≈",
         "tFF.......^≈≈",
         "....RR....KK≈",
         "....RR..≈≈KK≈",
@@ -45,6 +45,9 @@ TI.overworld = {
 
     discover() {
         const s = TI.state.ow;
+        // the cabin's smoke is visible from anywhere — H is always on the map
+        const cab = 3 * this.W + 6;
+        if (!s.disc.includes(cab)) s.disc.push(cab);
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
                 const x = s.x + dx, y = s.y + dy;
@@ -70,9 +73,9 @@ TI.overworld = {
                         cls = "t-area";
                         // a fully cleared area dims back down
                         const as = TI.state.areas[this.LETTERS[ch]];
-                        if (as && as.boss) cls = "t-cabin";
+                        if (as && as.boss) cls = "t-done";
                     }
-                    else if (ch === "~") cls = "t-cabin";
+                    else if (ch === "H") cls = "t-cabin";
                     else if (ch === "≈") { cls = "t-water"; if (this._wave) ch = "~"; }
                     else if (ch === "t") cls = "t-tree";
                     else if (ch === "^") cls = "t-hill";
@@ -107,7 +110,7 @@ TI.overworld = {
     checkTile() {
         const s = TI.state.ow;
         const t = this.tile(s.x, s.y);
-        if (t === "~") {
+        if (t === "H") {
             TI.menuOpen([
                 { label: "enter the cabin", fn: () => TI.cabin.enter() },
                 { label: "keep walking", fn: () => {} },

@@ -129,15 +129,18 @@ TI.area = {
 
     checkRegion() {
         const as = this.state();
+        let regionShown = false;
         this.cur.regions.forEach((r, i) => {
             if (as.regionsSeen.includes(i)) return;
             if (this.px >= r.x0 && this.px <= r.x1 && this.py >= r.y0 && this.py <= r.y1) {
                 as.regionsSeen.push(i);
                 TI.log(r.text, "dim");
                 TI.save();
+                regionShown = true;
             }
         });
-        if (this.cur.ambience && !this.state().boss && TI.chance(0.1)) {
+        if (regionShown) return;   // never stack ambience on a room description
+        if (this.cur.ambience && !this.state().boss && TI.chance(0.06)) {
             // the world only starts slipping once you're deep in it:
             // loop-tinged lines join the pool after three machine pieces
             let pool = this.cur.ambience;

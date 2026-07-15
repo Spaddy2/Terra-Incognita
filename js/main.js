@@ -19,7 +19,7 @@ TI.newState = function () {
         frags: [],             // memory fragment ids seen
         journals: [],          // journal indexes read
         deaths: 0,
-        ow: { x: 5, y: 3, disc: [] },
+        ow: { x: 8, y: 5, disc: [] },
         areas: {},             // areaId -> {e1,e2,boss,item,mem}
         cabinVisited: false,
         stagSeen: 0,
@@ -98,8 +98,8 @@ TI._typeNext = function () {
         if (!p.isConnected) { TI._typeNext(); return; }
         p.textContent = item.text.slice(0, ++i);
         logEl().scrollTop = logEl().scrollHeight;
-        if (i < item.text.length) TI._typeTimer = setTimeout(step, TI.settings.textMs || 11);
-        else { TI._curType = null; TI._typeTimer = setTimeout(() => TI._typeNext(), 30); }
+        if (i < item.text.length) TI._typeTimer = setTimeout(step, TI.settings.textMs || 24);
+        else { TI._curType = null; TI._typeTimer = setTimeout(() => TI._typeNext(), 500); }
     };
     step();
 };
@@ -311,7 +311,7 @@ TI.music = {
 };
 
 /* ============================ settings ============================ */
-TI.settings = { textMs: 11, music: true, sfx: true };
+TI.settings = { textMs: 24, music: true, sfx: true };
 TI.loadSettings = function () {
     try { Object.assign(TI.settings, JSON.parse(localStorage.getItem("ti-settings-v1") || "{}")); } catch (e) {}
     TI.music.on = TI.settings.music;
@@ -323,7 +323,7 @@ TI.saveSettings = function () {
     try { localStorage.setItem("ti-settings-v1", JSON.stringify(TI.settings)); } catch (e) {}
 };
 TI.textSpeedLabel = function () {
-    return TI.settings.textMs === 0 ? "instant" : (TI.settings.textMs <= 5 ? "fast" : "normal");
+    return TI.settings.textMs === 0 ? "instant" : (TI.settings.textMs <= 10 ? "fast" : "normal");
 };
 
 /* ============================ fx ============================ */
@@ -427,7 +427,7 @@ document.addEventListener("keydown", (e) => {
             return;
         }
         if (k === "t") {
-            TI.settings.textMs = TI.settings.textMs === 11 ? 4 : (TI.settings.textMs === 4 ? 0 : 11);
+            TI.settings.textMs = TI.settings.textMs === 24 ? 8 : (TI.settings.textMs === 8 ? 0 : 24);
             document.getElementById("title-text").textContent = TI.textSpeedLabel();
             TI.saveSettings();
             return;
@@ -509,14 +509,12 @@ TI.startNew = function () {
         TI.fade(null);
         TI.playLines([
             { text: "you wake up in a field.", cls: "em" },
-            { text: "the grass is wet. the light is wrong — noon-bright but low, like it can't decide." },
             { text: "you don't remember lying down. you don't remember your name." },
-            { text: "there is a cabin nearby. smoke is coming from the chimney.", cls: "dim" },
-            { text: "you are not the one who lit the fire." },
+            { text: "there is a cabin nearby — the bright H on your map. smoke rises from the chimney. you didn't light that fire.", cls: "dim" },
         ], () => {
             TI.overworld.show();
             TI.save();
-        }, 1700);
+        }, 2000);
     });
 };
 

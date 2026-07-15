@@ -73,10 +73,9 @@ TI.cabin = {
         if (!s.cabinVisited) {
             s.cabinVisited = true;
             opening.push(
-                { text: "the door is unlocked. of course it is.", cls: "em" },
+                { text: "the door is unlocked.", cls: "em" },
                 { text: "there is a mug on the table. the tea is still warm." },
                 { text: "someone left a candle burning. it has burned most of the way down." },
-                { text: "gear that isn't yours hangs by the door, sized exactly for you. food you didn't make. a bed with your shape worn into it.", cls: "dim" },
             );
         } else {
             opening.push({ text: "the cabin takes you back without comment.", cls: "dim" });
