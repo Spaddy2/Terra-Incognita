@@ -557,11 +557,43 @@ document.addEventListener("DOMContentLoaded", () => {
     TI.loadSettings();
     TI.showTitle();
 
-    // touch controls re-dispatch as key presses
-    document.querySelectorAll("#touch .tp").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            document.dispatchEvent(new KeyboardEvent("keydown", { key: btn.dataset.key }));
-        });
+    // touch: swipe the map to move, tap to continue/skip
+    const stage = document.getElementById("map-stage");
+    let touchStart = null;
+    stage.addEventListener("touchstart", (e) => {
+        touchStart = e.changedTouches[0];
+    }, { passive: true });
+    stage.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+    stage.addEventListener("touchend", (e) => {
+        if (!touchStart) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touchStart.clientX;
+        const dy = t.clientY - touchStart.clientY;
+        touchStart = null;
+        TI.sound.ensure();
+        TI.music.start();
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) {
+            // a tap: advance whatever is waiting
+            if (TI._seqSkip) { TI._seqSkip(); return; }
+            if (TI._typing) { TI.skipTyping(); return; }
+            if (TI.mode === "overlay") TI.memory.dismiss();
+            return;
+        }
+        if (TI.mode !== "free" || !TI.view) return;
+        if (Math.abs(dx) > Math.abs(dy)) TI.view.move(dx > 0 ? 1 : -1, 0);
+        else TI.view.move(0, dy > 0 ? 1 : -1);
+    }, { passive: true });
+
+    // the memory overlay dismisses on tap or click as well as any key
+    document.getElementById("fragment-overlay").addEventListener("click", () => {
+        if (TI.mode === "overlay") TI.memory.dismiss();
+    });
+
+    // tapping the pack in the sidebar opens it
+    document.getElementById("side-pack-block").addEventListener("click", () => {
+        if (TI.mode === "free" && TI.state && !TI.combat.active) {
+            TI.sound.ensure();
+            TI.inventory.openMenu();
+        }
     });
 });

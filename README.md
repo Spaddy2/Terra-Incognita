@@ -23,7 +23,7 @@ Open `index.html` in any modern browser (or host the folder on GitHub Pages).
 | Esc | back / leave |
 | S / M / T (title screen) | toggle sound / music / text speed |
 
-On touch devices an on-screen d-pad appears automatically.
+On touch devices, swipe the map to travel and tap to continue — menus are tappable.
 
 - Explore the overworld to find the six areas. The fog only lifts where you walk.
 - Each area holds two lesser creatures, a boss, a hidden item, and something worth remembering.

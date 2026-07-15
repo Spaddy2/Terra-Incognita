@@ -234,39 +234,10 @@ html, body {
 #side-pieces .got { color: var(--amber-bright); }
 #side-pieces .not { color: var(--dimmer); }
 
-/* ============ touch controls ============ */
-#touch {
-    position: absolute;
-    left: 0; right: 0; bottom: 8px;
-    display: none;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 30;
-    pointer-events: none;
-}
-#touch-pad {
-    display: grid;
-    grid-template-areas: ". up ." "left . right" ". down .";
-    gap: 6px;
-    pointer-events: all;
-}
-.tp-up { grid-area: up; } .tp-down { grid-area: down; }
-.tp-left { grid-area: left; } .tp-right { grid-area: right; }
-#touch-actions { display: flex; gap: 8px; align-items: flex-end; pointer-events: all; }
-.tp {
-    background: rgba(20, 19, 17, 0.8);
-    border: 1px solid var(--dimmer);
-    color: var(--fg);
-    font-family: inherit;
-    font-size: 18px;
-    min-width: 52px; min-height: 48px;
-    padding: 6px 12px;
-}
-.tp:active { border-color: var(--amber); color: var(--amber-bright); }
-@media (pointer: coarse) {
-    #touch { display: flex; }
-    #log { flex-basis: 20vh; }
-}
+/* touch: the map itself is the controller (swipe to move, tap to continue) */
+#map-stage { touch-action: none; }
+#side-pack-block { cursor: pointer; }
+#side-pack-block:active .side-title { color: var(--amber-bright); }
 
 /* ============ memory fragments ============ */
 #fragment-overlay {
