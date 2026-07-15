@@ -396,7 +396,7 @@ TI.setLocation = function (name) { document.getElementById("location-name").text
 TI.esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /* ============================ input ============================ */
-TI.mode = "title";   // title | free | menu | overlay | busy
+TI.mode = "title";   // title | free | menu | busy
 TI.view = null;      // object with .move(dx,dy) and optional .action()
 
 document.addEventListener("keydown", (e) => {
@@ -410,7 +410,6 @@ document.addEventListener("keydown", (e) => {
     if (TI._seqSkip) { TI._seqSkip(); return; }
     if (TI._typing) TI.skipTyping();
 
-    if (TI.mode === "overlay") { TI.memory.dismiss(); return; }
     if (TI.mode === "busy") return;
 
     if (TI.mode === "title") {
@@ -575,19 +574,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) {
             // a tap: advance whatever is waiting
             if (TI._seqSkip) { TI._seqSkip(); return; }
-            if (TI._typing) { TI.skipTyping(); return; }
-            if (TI.mode === "overlay") TI.memory.dismiss();
+            if (TI._typing) TI.skipTyping();
             return;
         }
         if (TI.mode !== "free" || !TI.view) return;
         if (Math.abs(dx) > Math.abs(dy)) TI.view.move(dx > 0 ? 1 : -1, 0);
         else TI.view.move(0, dy > 0 ? 1 : -1);
     }, { passive: true });
-
-    // the memory overlay dismisses on tap or click as well as any key
-    document.getElementById("fragment-overlay").addEventListener("click", () => {
-        if (TI.mode === "overlay") TI.memory.dismiss();
-    });
 
     // tapping the pack in the sidebar opens it
     document.getElementById("side-pack-block").addEventListener("click", () => {

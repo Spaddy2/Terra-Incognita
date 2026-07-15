@@ -1,45 +1,24 @@
-/* memory fragments — display, tracking, and re-reading */
+/* memory fragments — delivered inline in the log, never as pop-ups */
 window.TI = window.TI || {};
 
 TI.memory = {
-    _after: null,
-    _prevMode: "free",
 
-    /* show a fragment overlay. cb runs after the player dismisses it. */
+    /* log a fragment. cb runs right after (short beat for pacing). */
     show(id, cb) {
         const text = TI.MEMORIES[id];
         if (!text) { if (cb) cb(); return; }
-        const isNew = !TI.state.frags.includes(id);
-        if (isNew) { TI.state.frags.push(id); TI.save(); }
-
-        this._after = cb || null;
-        this._prevMode = TI.mode;
-        TI.mode = "overlay";
+        if (!TI.state.frags.includes(id)) {
+            TI.state.frags.push(id);
+            TI.save();
+        }
         TI.sound.play("frag");
-
-        const ov = document.getElementById("fragment-overlay");
-        const tx = document.getElementById("fragment-text");
-        const hint = document.getElementById("fragment-hint");
-        tx.textContent = "“" + text + "”";
-        tx.classList.remove("show");
-        hint.classList.remove("show");
-        ov.classList.remove("hidden");
-        // slow fade in
-        requestAnimationFrame(() => requestAnimationFrame(() => tx.classList.add("show")));
-        this._hintTimer = setTimeout(() => hint.classList.add("show"), 2600);
-        this._minTime = Date.now() + 900;   // can't be dismissed instantly by accident
+        TI.log("“" + text + "”", "frag");
         TI.updateSidebar();
+        if (cb) setTimeout(cb, 400);
     },
 
-    dismiss() {
-        if (Date.now() < this._minTime) return;
-        clearTimeout(this._hintTimer);
-        document.getElementById("fragment-overlay").classList.add("hidden");
-        TI.mode = this._prevMode === "overlay" ? "free" : this._prevMode;
-        const cb = this._after;
-        this._after = null;
-        if (cb) cb();
-    },
+    /* kept for compatibility; fragments no longer block anything */
+    dismiss() {},
 
     /* cabin: sit and remember — re-read recovered fragments */
     openJournalOfFragments(back) {
