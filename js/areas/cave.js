@@ -33,8 +33,9 @@ TI.registerArea({
         { x0: 1, y0: 1, x1: 4, y1: 3, text: "the bottom of the cave. perfectly round, perfectly smooth, like a bubble in the rock. in the centre, the dark is standing up." },
     ],
     ambience: [
-        "your footsteps echo twice. you stop. the second set takes one more step.",
-        "water drips somewhere, keeping time. it has never once missed.",
-        "the dark ahead of you shifts its weight from foot to foot.",
+        "your footsteps echo twice down here. the second echo is heavier.",
+        "water drips somewhere in the dark, slow and even, like a clock.",
+        "the darkness ahead of you moves. or your eyes invent it. down here, there's no difference.",
+        "cold air rises from below, slow and steady. like something breathing out.",
     ],
 });

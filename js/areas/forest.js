@@ -32,8 +32,9 @@ TI.registerArea({
         { x0: 1, y0: 6, x1: 7, y1: 8, text: "the deep wood. between the trunks, pale shapes that are almost light. the silence here is the loud kind." },
     ],
     ambience: [
-        "something pale watches from between the trees. when you look, it is a birch. it was not a birch.",
-        "hoofsteps, keeping perfect pace with yours. they stop half a beat after you do.",
-        "antlers scrape the canopy somewhere overhead. no leaves fall.",
+        "between two trunks, something pale stands very still. when you look again, it's gone.",
+        "hoofbeats behind you. they stop when you stop — half a second late.",
+        "no birds sing in here. they just watch.",
+        "a branch snaps overhead. nothing falls.",
     ],
 });

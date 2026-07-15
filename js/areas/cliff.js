@@ -32,8 +32,9 @@ TI.registerArea({
         { x0: 1, y0: 6, x1: 16, y1: 8, text: "the tide-cave. the walls weep. things that were given to the sea are arranged here in tidy rows, waiting to be claimed." },
     ],
     ambience: [
-        "spray hangs in the air a half-second too long before it falls.",
-        "the sea sounds, briefly, like a room full of people asking one question.",
-        "far out, something long and slow rolls under the surface without breaking it.",
+        "the wind carries a voice up the cliff face. one word, over and over. it could be your name.",
+        "far below, the waves keep perfect rhythm. like breathing. like waiting.",
+        "the gulls circle and circle and never land.",
+        "salt stings your eyes, and for one second you smell coffee. then it's gone.",
     ],
 });

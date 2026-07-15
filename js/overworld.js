@@ -93,7 +93,7 @@ TI.overworld = {
         if (t === null) { return; }
         if (t === "≈") {
             TI.sound.play("deny");
-            TI.log("the water is cold and dark and does not want you. not that way.", "dim");
+            TI.log("the water is cold, dark, and deep. not on foot.", "dim");
             return;
         }
         s.x = nx; s.y = ny;

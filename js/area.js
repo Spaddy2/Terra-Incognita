@@ -12,10 +12,10 @@ TI.registerArea = function (def) {
 
 /* decorative terrain: blocks movement, drawn in the area's accent colour */
 TI.DECOR = {
-    "≈": "deep water. it looks back.",
-    "T": "the trees grow trunk against trunk here. they are not going to move.",
-    "□": "rubble, waist-high and strangely deliberate. you'd swear it was stacked.",
-    "*": "crystal, cold as teeth. your reflection in it is a half-second slow.",
+    "≈": "deep, black water. not here. find another way around.",
+    "T": "the trees grow too close together to pass.",
+    "□": "rubble blocks the way — stacked too neatly to be an accident.",
+    "*": "a wall of crystal, cold to the touch. your reflection moves a beat behind you.",
 };
 
 TI.area = {
