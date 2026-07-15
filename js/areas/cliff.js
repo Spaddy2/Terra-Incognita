@@ -28,13 +28,17 @@ TI.registerArea({
     itemLine: "set on a flat rock at the cliff edge, deliberately, squared to the horizon: a whetstone, worn in a groove that matches your grip.",
     regions: [
         { x0: 1, y0: 1, x1: 6, y1: 4, text: "the headland. wind, salt, gulls that don't call. a rope is tied off to an iron ring here, old but retied recently. by someone thorough." },
-        { x0: 8, y0: 1, x1: 14, y1: 4, text: "the lookout. the long stair starts here, cut into the cliff face by hand. hundreds of steps. the chisel-work is patient and obsessive and familiar." },
+        { x0: 8, y0: 1, x1: 14, y1: 4, text: "the lookout. a long stair starts here, cut into the cliff face by hand. hundreds of steps of patient, obsessive work." },
         { x0: 1, y0: 6, x1: 16, y1: 8, text: "the tide-cave. the walls weep. things that were given to the sea are arranged here in tidy rows, waiting to be claimed." },
     ],
     ambience: [
-        "the wind carries a voice up the cliff face. one word, over and over. it could be your name.",
-        "far below, the waves keep perfect rhythm. like breathing. like waiting.",
-        "the gulls circle and circle and never land.",
-        "salt stings your eyes, and for one second you smell coffee. then it's gone.",
+        "the waves crash against the cliff below, spraying a fine mist into the air.",
+        "the wind pulls at you, pushing you back from the edge.",
+        "gulls wheel far overhead, pale specks against the grey sky.",
+        "salt spray beads cold on your face.",
+    ],
+    ambienceLate: [
+        "the wind carries a voice up the cliff face. it could almost be your name.",
+        "for one second the salt air smells like coffee. then it's gone.",
     ],
 });

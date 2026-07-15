@@ -33,9 +33,13 @@ TI.registerArea({
         { x0: 10, y0: 7, x1: 16, y1: 8, text: "the inner archive. lamplight. a desk. a chair for visitors, its cushion worn down by one particular shape of sitting." },
     ],
     ambience: [
-        "somewhere in the ruins, stone scrapes against stone. then it stops, like it noticed you listening.",
-        "a fresh stone tablet lies across your path. it wasn't there a moment ago. you don't read it.",
-        "wind funnels down the dead streets. for a moment it sounds like a crowd.",
+        "the wind whistles through the empty buildings, an echo of voices no longer present.",
+        "loose stones shift and settle somewhere down the street.",
+        "grass grows up through the cracks of what was once a road.",
+        "a broken column lies across the plaza, worn smooth by rain.",
+    ],
+    ambienceLate: [
+        "a fresh stone tablet lies across your path. it wasn't there a moment ago.",
         "you pass a doorway with your name carved above it. you keep walking.",
     ],
 });

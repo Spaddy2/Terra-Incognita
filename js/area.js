@@ -12,10 +12,10 @@ TI.registerArea = function (def) {
 
 /* decorative terrain: blocks movement, drawn in the area's accent colour */
 TI.DECOR = {
-    "≈": "deep, black water. not here. find another way around.",
+    "≈": "the water is too deep to cross.",
     "T": "the trees grow too close together to pass.",
-    "□": "rubble blocks the way — stacked too neatly to be an accident.",
-    "*": "a wall of crystal, cold to the touch. your reflection moves a beat behind you.",
+    "□": "a heap of collapsed masonry blocks the way.",
+    "*": "a wall of crystal, cold to the touch.",
 };
 
 TI.area = {
@@ -138,8 +138,12 @@ TI.area = {
             }
         });
         if (this.cur.ambience && !this.state().boss && TI.chance(0.1)) {
-            const line = this.cur.ambience[TI.rint(0, this.cur.ambience.length - 1)];
-            TI.log(line, "dim");
+            // the world only starts slipping once you're deep in it:
+            // loop-tinged lines join the pool after three machine pieces
+            let pool = this.cur.ambience;
+            const pieces = Object.values(TI.state.pieces).filter(Boolean).length;
+            if (this.cur.ambienceLate && pieces >= 3) pool = pool.concat(this.cur.ambienceLate);
+            TI.log(pool[TI.rint(0, pool.length - 1)], "dim");
         }
     },
 

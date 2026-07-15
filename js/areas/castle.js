@@ -33,9 +33,13 @@ TI.registerArea({
         { x0: 14, y0: 6, x1: 16, y1: 8, text: "the old treasury. emptied, swept, and signed for." },
     ],
     ambience: [
-        "somewhere above you, a door opens for someone.",
-        "armour walks the next corridor over. it keeps your pace exactly.",
-        "a laugh drifts down a stairwell and goes on two beats too long.",
-        "the torches in this hall are lit. you didn't light them. someone is expecting you.",
+        "the sound of armour clanking can be heard down the hall.",
+        "the wind whistles through the arrow-slits, high and thin.",
+        "torn banners stir along the walls as you pass.",
+        "dust sifts down from the rafters somewhere overhead.",
+    ],
+    ambienceLate: [
+        "the armour down the hall keeps your pace. step for step.",
+        "the torches in this hall are lit. you didn't light them.",
     ],
 });

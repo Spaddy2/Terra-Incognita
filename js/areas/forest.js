@@ -32,9 +32,13 @@ TI.registerArea({
         { x0: 1, y0: 6, x1: 7, y1: 8, text: "the deep wood. between the trunks, pale shapes that are almost light. the silence here is the loud kind." },
     ],
     ambience: [
+        "the canopy creaks overhead, though the air is still.",
+        "somewhere far off, a branch snaps. then silence.",
+        "pale light filters down between the trunks and dies before it reaches the ground.",
+        "it is quiet enough in here to hear your own heartbeat.",
+    ],
+    ambienceLate: [
+        "hoofbeats, somewhere behind you. they stop half a second after you do.",
         "between two trunks, something pale stands very still. when you look again, it's gone.",
-        "hoofbeats behind you. they stop when you stop — half a second late.",
-        "no birds sing in here. they just watch.",
-        "a branch snaps overhead. nothing falls.",
     ],
 });

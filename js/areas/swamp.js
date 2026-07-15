@@ -27,14 +27,18 @@ TI.registerArea({
     unlockText: "somewhere deeper in, mud slides off mud. a way through has opened.",
     itemLine: "wedged in a rotted stump: an iron shard, sharp on three sides. torn off something much bigger.",
     regions: [
-        { x0: 1, y0: 1, x1: 7, y1: 8, text: "dead reeds. standing water. old bootprints, the same tread as yours, going in every direction and coming back from none of them." },
+        { x0: 1, y0: 1, x1: 7, y1: 8, text: "dead reeds and standing water. the mud pulls at every step." },
         { x0: 9, y0: 1, x1: 16, y1: 4, text: "a drowned grove. the trees died standing up and never fell. bubbles rise in slow ones and twos." },
         { x0: 9, y0: 6, x1: 16, y1: 8, text: "the heart of the swamp. the water here is perfectly still and perfectly black, and something under it is looking up." },
     ],
     ambience: [
-        "a croak rolls across the water, deep enough to feel in your chest.",
-        "bubbles rise in the black water, pop, and stop. something decided to be still.",
-        "the reeds bend against the wind, not with it.",
-        "your boot pulls free of the mud with a sound like a mouth.",
+        "a low croak rolls across the water somewhere ahead.",
+        "bubbles rise through the black water and pop, one by one.",
+        "the reeds rustle in a wind you can barely feel.",
+        "mist drifts between the dead trees in slow ribbons.",
+    ],
+    ambienceLate: [
+        "there are bootprints in the mud ahead of you. the same tread as yours.",
+        "the croak sounds again. it is exactly the same every time. exactly.",
     ],
 });
