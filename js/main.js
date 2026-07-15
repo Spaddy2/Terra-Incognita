@@ -556,31 +556,52 @@ document.addEventListener("DOMContentLoaded", () => {
     TI.loadSettings();
     TI.showTitle();
 
-    // touch: swipe the map to move, tap to continue/skip
+    // touch: drag on the map to walk (keep holding to keep walking), tap to continue/skip
     const stage = document.getElementById("map-stage");
-    let touchStart = null;
+    const touch = { start: null, moved: false, dir: null, timer: null };
+    const stepDir = () => {
+        if (touch.dir && TI.mode === "free" && TI.view) TI.view.move(touch.dir[0], touch.dir[1]);
+    };
+    const stopWalking = () => {
+        clearInterval(touch.timer);
+        touch.timer = null;
+        touch.dir = null;
+    };
     stage.addEventListener("touchstart", (e) => {
-        touchStart = e.changedTouches[0];
-    }, { passive: true });
-    stage.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
-    stage.addEventListener("touchend", (e) => {
-        if (!touchStart) return;
-        const t = e.changedTouches[0];
-        const dx = t.clientX - touchStart.clientX;
-        const dy = t.clientY - touchStart.clientY;
-        touchStart = null;
+        touch.start = e.changedTouches[0];
+        touch.moved = false;
         TI.sound.ensure();
         TI.music.start();
-        if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) {
+    }, { passive: true });
+    stage.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        if (!touch.start) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touch.start.clientX;
+        const dy = t.clientY - touch.start.clientY;
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+        touch.moved = true;
+        const dir = Math.abs(dx) > Math.abs(dy)
+            ? [dx > 0 ? 1 : -1, 0]
+            : [0, dy > 0 ? 1 : -1];
+        if (!touch.dir || touch.dir[0] !== dir[0] || touch.dir[1] !== dir[1]) {
+            touch.dir = dir;
+            stepDir();                                  // step immediately on direction change
+            clearInterval(touch.timer);
+            touch.timer = setInterval(stepDir, 240);    // then keep walking while held
+        }
+    }, { passive: false });
+    stage.addEventListener("touchend", () => {
+        const wasTap = touch.start && !touch.moved;
+        touch.start = null;
+        stopWalking();
+        if (wasTap) {
             // a tap: advance whatever is waiting
             if (TI._seqSkip) { TI._seqSkip(); return; }
             if (TI._typing) TI.skipTyping();
-            return;
         }
-        if (TI.mode !== "free" || !TI.view) return;
-        if (Math.abs(dx) > Math.abs(dy)) TI.view.move(dx > 0 ? 1 : -1, 0);
-        else TI.view.move(0, dy > 0 ? 1 : -1);
     }, { passive: true });
+    stage.addEventListener("touchcancel", () => { touch.start = null; stopWalking(); }, { passive: true });
 
     // tapping the pack in the sidebar opens it
     document.getElementById("side-pack-block").addEventListener("click", () => {
