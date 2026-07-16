@@ -5,7 +5,6 @@ window.TI = window.TI || {};
 TI.MEMORIES = {
     /* the ten key fragments, in rough order */
     f1:  "you've done this before. the frog dies the same way every time.",
-    f2:  "the handwriting on the cabin wall is yours. you don't remember writing it.",
     f3:  "the king knew your name. all of them. you didn't stop to ask how.",
     f4:  "the forest was the same the last time. and the time before.",
     f5:  "you stood at this cliff before. you didn't jump. you went back to work.",
@@ -31,6 +30,6 @@ TI.BOSS_FRAGMENT = {
 };
 
 TI.MEMORY_ORDER = [
-    "f1", "f2", "m_swamp", "f3", "m_castle", "f4", "m_forest",
+    "f1", "m_swamp", "f3", "m_castle", "f4", "m_forest",
     "f5", "m_cliff", "f6", "m_ruins", "f7", "m_cave", "f8", "f9", "f10",
 ];

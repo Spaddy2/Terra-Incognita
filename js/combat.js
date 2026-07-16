@@ -380,7 +380,8 @@ TI.combat = {
         TI.playLines([{ text: "everything goes quiet, then dark, then nothing.", cls: "dmg" }], () => {
             TI.fade("black", () => {
                 TI.state.hp = Math.floor(TI.state.maxHp / 2);
-                TI.state.ow = { ...TI.state.ow, x: 5, y: 3 };
+                const cab = TI.overworld.cabinPos();
+                TI.state.ow = { ...TI.state.ow, x: cab.x, y: cab.y + 1 };
                 TI.updateSidebar();
                 TI.save();
                 TI.clearLog();

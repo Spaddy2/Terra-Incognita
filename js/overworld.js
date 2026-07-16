@@ -2,17 +2,24 @@
 window.TI = window.TI || {};
 
 TI.overworld = {
-    W: 13, H: 7,
+    W: 26, H: 14,
     /* S swamp · C castle · F forest · K sea cliff · R ruins · V cave · H the cabin
-       t trees · ^ hills · , reeds · ≈ water · . field */
+       t trees (impassable) · ^ hills · , reeds · ≈ water (impassable) · . field */
     MAP: [
-        "SS,.....tt.CC",
-        "SS,.t....t.CC",
-        ",tt...^..VV^≈",
-        "tFF...H..VV.≈",
-        "tFF.......^≈≈",
-        "....RR....KK≈",
-        "....RR..≈≈KK≈",
+        "≈≈,,,......ttt.......tt.t≈",
+        "≈,SS,,..............CC...≈",
+        "≈,SS,......t........CC...≈",
+        ",,,,....ttt....t.....,...≈",
+        "..t........t....^^...t..≈≈",
+        "..tt....t..t..........t.≈≈",
+        ".t......t....H....VV.^..≈≈",
+        "........t.........VV.^.≈≈≈",
+        ".FF..ttt.........^....≈≈≈≈",
+        ".FF......t........^....≈≈≈",
+        ".tt.......t...........≈≈≈≈",
+        "...t....RR..........KK.≈≈≈",
+        "........RR..........KK≈≈≈≈",
+        ",,........,,..........≈≈≈≈",
     ],
     LETTERS: { S: "swamp", C: "castle", F: "forest", K: "cliff", R: "ruins", V: "cave" },
 
@@ -43,10 +50,19 @@ TI.overworld = {
     },
     _wave: false,
 
+    cabinPos() {
+        for (let y = 0; y < this.H; y++) {
+            const x = this.MAP[y].indexOf("H");
+            if (x >= 0) return { x, y };
+        }
+        return { x: 0, y: 0 };
+    },
+
     discover() {
         const s = TI.state.ow;
         // the cabin's smoke is visible from anywhere — H is always on the map
-        const cab = 3 * this.W + 6;
+        const c = this.cabinPos();
+        const cab = c.y * this.W + c.x;
         if (!s.disc.includes(cab)) s.disc.push(cab);
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
@@ -97,6 +113,11 @@ TI.overworld = {
         if (t === "≈") {
             TI.sound.play("deny");
             TI.log("the water is cold, dark, and deep. not on foot.", "dim");
+            return;
+        }
+        if (t === "t") {
+            TI.sound.play("deny");
+            TI.log("the trees grow too thick to pass. you'll have to go around.", "dim");
             return;
         }
         s.x = nx; s.y = ny;

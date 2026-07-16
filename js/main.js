@@ -19,7 +19,7 @@ TI.newState = function () {
         frags: [],             // memory fragment ids seen
         journals: [],          // journal indexes read
         deaths: 0,
-        ow: { x: 8, y: 5, disc: [] },
+        ow: { x: 15, y: 8, disc: [] },
         areas: {},             // areaId -> {e1,e2,boss,item,mem}
         cabinVisited: false,
         stagSeen: 0,
@@ -384,7 +384,29 @@ TI.updateSidebar = function () {
 };
 
 /* ============================ map + location helpers ============================ */
-TI.setMap = function (html) { document.getElementById("map").innerHTML = html; };
+/* the map always scales to fill the stage */
+TI.setMap = function (html) {
+    const el = document.getElementById("map");
+    el.innerHTML = html;
+    const stage = document.getElementById("map-stage");
+    if (!stage.clientWidth) return;
+    const lines = el.textContent.split("\n").filter((l, i, a) => l.length || i < a.length - 1);
+    const rows = Math.max(1, lines.length);
+    const cols = Math.max(1, ...lines.map(l => [...l].length));
+    // monospace advance ≈ 0.6em + letter-spacing of 0.18em
+    let f = Math.min(
+        (stage.clientWidth - 12) / (0.78 * cols),
+        (stage.clientHeight - 12) / (1.18 * rows),
+        44,
+    );
+    f = Math.max(11, f);
+    el.style.fontSize = f + "px";
+    el.style.letterSpacing = (0.18 * f).toFixed(2) + "px";
+};
+window.addEventListener("resize", () => {
+    const el = document.getElementById("map");
+    if (el && el.innerHTML) TI.setMap(el.innerHTML);
+});
 TI.setMapTheme = function (cls) { document.getElementById("map").className = cls || ""; };
 TI.flashMap = function () {
     const m = document.getElementById("map");

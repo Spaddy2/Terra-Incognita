@@ -111,7 +111,7 @@ button { touch-action: manipulation; }
     overflow: hidden;
 }
 #map {
-    font-size: clamp(16px, 3.4vh, 30px);
+    font-size: 20px;             /* overridden per-map: it scales to fill the stage */
     line-height: 1.16;
     letter-spacing: 4px;
     white-space: pre;
@@ -119,8 +119,8 @@ button { touch-action: manipulation; }
 }
 
 /* base palette (overworld default) */
-#map .t-dim   { color: var(--dimmer); }
-#map .t-land  { color: #57534b; }
+#map .t-dim   { color: #24221e; }
+#map .t-land  { color: #6b665c; }
 #map .t-water { color: #3f5a6b; }
 #map .t-tree  { color: #3c5c3a; }
 #map .t-hill  { color: #6b5f49; }
@@ -280,6 +280,5 @@ button { touch-action: manipulation; }
     #screen-game { flex-direction: column; }
     #sidebar { width: 100%; border-left: none; border-top: 1px solid var(--dimmer);
                padding-left: 0; padding-top: 10px; flex-direction: row; flex-wrap: wrap; }
-    #map { font-size: clamp(12px, 2.6vh, 18px); letter-spacing: 2px; }
     #log { flex-basis: 22vh; }
 }

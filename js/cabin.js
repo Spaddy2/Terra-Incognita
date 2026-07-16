@@ -83,11 +83,7 @@ TI.cabin = {
         const carried = TI.PIECE_ORDER.filter(id => s.pieces[id] && !s.installed.includes(id));
         if (carried.length) opening.push({ text: "the piece you're carrying feels heavier in here. the shelf is waiting.", cls: "em" });
 
-        TI.playLines(opening, () => {
-            if (!s.frags.includes("f2")) {
-                TI.memory.show("f2", () => this.menu());
-            } else this.menu();
-        }, 1600);
+        TI.playLines(opening, () => this.menu(), 1600);
         TI.save();
     },
 
